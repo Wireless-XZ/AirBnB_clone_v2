@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ Console Module """
+import json
 import cmd
 import sys
 from models.base_model import BaseModel
@@ -115,13 +116,28 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        if not args:
+        args = args.split(" ")
+        if not args[0]:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        elif args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
+        new_instance = HBNBCommand.classes[args[0]]()
+
+        for i in range(1, len(args)):
+            att_name = args[i][:args[i].index('=')]
+            att_val = args[i][args[i].index('=') + 1:].replace('_', ' ')
+            if "." in att_val:
+                att_val = float(att_val)
+            elif att_val[0] == '"':
+                att_val = json.loads(att_val)
+            else:
+                try:
+                    att_val = int(att_val)
+                except Exception:
+                    continue;
+            new_instance.__dict__[att_name] = att_val
         storage.save()
         print(new_instance.id)
         storage.save()
