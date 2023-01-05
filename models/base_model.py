@@ -8,7 +8,7 @@ Base = declarative_base()
 
 class BaseModel:
     """A base class for all hbnb models"""
-    id = "xxxtentacion"
+    id = str(uuid.uuid4())
     created_at = datetime.utcnow()
     updated_at = datetime.utcnow()
 
@@ -26,6 +26,7 @@ class BaseModel:
                                                      '%Y-%m-%dT%H:%M:%S.%f')
             del kwargs['__class__']
             self.__dict__.update(kwargs)
+            print("######", kwargs)
 
     def __str__(self):
         """Returns a string representation of the instance"""

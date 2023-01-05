@@ -17,18 +17,23 @@ class DBStorage:
 
     def all(self, cls=None):
         """Queries on the current database"""
-        from sqlalchemy import sessionmaker
+        from console import HBNBCommand
+        from models.base_model import BaseModel
+        from models.user import User
+        from models.place import Place
+        from models.state import State
+        from models.city import City
+        from models.amenity import Amenity
+        from models.review import Review
         objs_dict = {}
-        self.__session = sessionmaker(bind=self.__engine)()
-        #session = self.__session
         if cls is not None:
-            objs = self.__session.query(cls)
+            if cls in HBNBCommand.classes.keys():
+                for obj in self.__session.query(cls).all():
+                    objs_dict.update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
         else:
-            objs = self.__session.query().all()
-
-        for obj in objs:
-            objs_dict.update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
-
+            for key, val in HBNBCommand.classes.items():
+                for obj in self.__session.query(val).all():
+                    objs_dict.update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
         return (objs_dict)
 
     def new(self, obj):
@@ -51,4 +56,4 @@ class DBStorage:
         from sqlalchemy.orm import sessionmaker, scoped_session
         Base.metadata.create_all(self.__engine)
         session = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        self.__session = scoped_session(session)
+        self.__session = scoped_session(session)()
