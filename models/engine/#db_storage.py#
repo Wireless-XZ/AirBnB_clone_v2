@@ -30,18 +30,17 @@ class DBStorage:
     def all(self, cls=None):
         """Queries on the current database"""
         from console import HBNBCommand
-        print("############################", type(cls))
         objs_dict = {}
         if cls is not None:
             if cls in HBNBCommand.classes:
                 for obj in self.__session.query(HBNBCommand.classes[cls]).all():
                     key = str(obj.__class__.__name__) + "." + str(obj.id)
                     objs_dict[key] = obj
-        else:
-            for key, val in HBNBCommand.classes.items():
-                for obj in self.__session.query(val).all():
-                    key = str(val.__class__.__name__) + "." + str(obj.id)
-                    objs_dict[key] = obj
+            else:
+                for key, val in HBNBCommand.classes.items():
+                    for obj in self.__session.query(val).all():
+                        key = str(val.__class__.__name__) + "." + str(obj.id)
+                        objs_dict[key] = obj
         return (objs_dict)
 
     def new(self, obj):

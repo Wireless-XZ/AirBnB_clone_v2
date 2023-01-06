@@ -15,7 +15,7 @@ place_amenity = Table('place_amenity', metadata,
                              primary_key=True, nullable=False),
                       Column('amenity_id', String(60), ForeignKey("amenities.id"),
                              primary_key=True, nullable=False)
-)
+                      )
 
 
 class Place(BaseModel, Base):
@@ -67,7 +67,7 @@ class Place(BaseModel, Base):
             return list_reviews
 
         @property
-        def amenites(self):
+        def amenities(self):
             amenities_list = []
             amenity_objs = []
             for amenity_id in self.amenity_ids:

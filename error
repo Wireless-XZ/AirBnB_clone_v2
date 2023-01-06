@@ -1,0 +1,30 @@
+Traceback (most recent call last):
+  File "./console.py", line 339, in <module>
+    HBNBCommand().cmdloop()
+  File "/usr/lib/python3.8/cmd.py", line 138, in cmdloop
+    stop = self.onecmd(line)
+  File "/usr/lib/python3.8/cmd.py", line 217, in onecmd
+    return func(arg)
+  File "./console.py", line 222, in do_all
+    for k, v in storage.all().items():
+  File "/root/AirBnB_clone_v2/models/engine/db_storage.py", line 41, in all
+    for obj in self.__session.query(val).all():
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/orm/session.py", line 2139, in query
+    return self._query_cls(entities, self, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/orm/query.py", line 180, in __init__
+    self._set_entities(entities)
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/orm/query.py", line 187, in _set_entities
+    self._raw_columns = [
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/orm/query.py", line 188, in <listcomp>
+    coercions.expect(
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/sql/coercions.py", line 188, in expect
+    resolved = impl._literal_coercion(
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/sql/coercions.py", line 401, in _literal_coercion
+    self._raise_for_expected(element, argname)
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/sql/coercions.py", line 437, in _raise_for_expected
+    return super(_SelectIsNotFrom, self)._raise_for_expected(
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/sql/coercions.py", line 283, in _raise_for_expected
+    util.raise_(exc.ArgumentError(msg, code=code), replace_context=err)
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+sqlalchemy.exc.ArgumentError: Column expression or FROM clause expected, got <class 'models.base_model.BaseModel'>.

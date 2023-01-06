@@ -10,7 +10,7 @@ from models.place import place_amenity
 storage_type = getenv("HBNB_TYPE_STORAGE")
 
 
-class Amenity(BaseModel):
+class Amenity(BaseModel, Base):
     __tablename__ = "amenities"
 
     if storage_type == "db":
