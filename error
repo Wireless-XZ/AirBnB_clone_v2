@@ -1,30 +1,78 @@
 Traceback (most recent call last):
-  File "./console.py", line 339, in <module>
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/engine/base.py", line 1808, in _execute_context
+    self.dialect.do_execute(
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+  File "/usr/local/lib/python3.8/dist-packages/MySQLdb/cursors.py", line 206, in execute
+    res = self._query(query)
+  File "/usr/local/lib/python3.8/dist-packages/MySQLdb/cursors.py", line 319, in _query
+    db.query(q)
+  File "/usr/local/lib/python3.8/dist-packages/MySQLdb/connections.py", line 254, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.IntegrityError: (1452, 'Cannot add or update a child row: a foreign key constraint fails (`hbnb_dev_db`.`cities`, CONSTRAINT `cities_ibfk_1` FOREIGN KEY (`state_id`) REFERENCES `states` (`id`))')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "./console.py", line 340, in <module>
     HBNBCommand().cmdloop()
   File "/usr/lib/python3.8/cmd.py", line 138, in cmdloop
     stop = self.onecmd(line)
   File "/usr/lib/python3.8/cmd.py", line 217, in onecmd
     return func(arg)
-  File "./console.py", line 222, in do_all
-    for k, v in storage.all().items():
-  File "/root/AirBnB_clone_v2/models/engine/db_storage.py", line 41, in all
-    for obj in self.__session.query(val).all():
-  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/orm/session.py", line 2139, in query
-    return self._query_cls(entities, self, **kwargs)
-  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/orm/query.py", line 180, in __init__
-    self._set_entities(entities)
-  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/orm/query.py", line 187, in _set_entities
-    self._raw_columns = [
-  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/orm/query.py", line 188, in <listcomp>
-    coercions.expect(
-  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/sql/coercions.py", line 188, in expect
-    resolved = impl._literal_coercion(
-  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/sql/coercions.py", line 401, in _literal_coercion
-    self._raise_for_expected(element, argname)
-  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/sql/coercions.py", line 437, in _raise_for_expected
-    return super(_SelectIsNotFrom, self)._raise_for_expected(
-  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/sql/coercions.py", line 283, in _raise_for_expected
-    util.raise_(exc.ArgumentError(msg, code=code), replace_context=err)
+  File "./console.py", line 140, in do_create
+    new_instance.save()
+  File "/root/AirBnB_clone_v2/models/base_model.py", line 42, in save
+    storage.save()
+  File "/root/AirBnB_clone_v2/models/engine/db_storage.py", line 59, in save
+    self.__session.commit()
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/orm/session.py", line 1431, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/orm/session.py", line 829, in commit
+    self._prepare_impl()
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/orm/session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/orm/session.py", line 3363, in flush
+    self._flush(objects)
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/orm/session.py", line 3503, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
   File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/util/compat.py", line 207, in raise_
     raise exception
-sqlalchemy.exc.ArgumentError: Column expression or FROM clause expected, got <class 'models.base_model.BaseModel'>.
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/orm/session.py", line 3463, in _flush
+    flush_context.execute()
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/orm/unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/orm/unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/orm/persistence.py", line 244, in save_obj
+    _emit_insert_statements(
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/orm/persistence.py", line 1096, in _emit_insert_statements
+    c = connection._execute_20(
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/engine/base.py", line 1620, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/sql/elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/engine/base.py", line 1487, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/engine/base.py", line 1851, in _execute_context
+    self._handle_dbapi_exception(
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/engine/base.py", line 2032, in _handle_dbapi_exception
+    util.raise_(
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/util/compat.py", line 207, in raise_
+    raise exception
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/engine/base.py", line 1808, in _execute_context
+    self.dialect.do_execute(
+  File "/usr/local/lib/python3.8/dist-packages/sqlalchemy/engine/default.py", line 732, in do_execute
+    cursor.execute(statement, parameters)
+  File "/usr/local/lib/python3.8/dist-packages/MySQLdb/cursors.py", line 206, in execute
+    res = self._query(query)
+  File "/usr/local/lib/python3.8/dist-packages/MySQLdb/cursors.py", line 319, in _query
+    db.query(q)
+  File "/usr/local/lib/python3.8/dist-packages/MySQLdb/connections.py", line 254, in query
+    _mysql.connection.query(self, query)
+sqlalchemy.exc.IntegrityError: (MySQLdb._exceptions.IntegrityError) (1452, 'Cannot add or update a child row: a foreign key constraint fails (`hbnb_dev_db`.`cities`, CONSTRAINT `cities_ibfk_1` FOREIGN KEY (`state_id`) REFERENCES `states` (`id`))')
+[SQL: INSERT INTO cities (id, created_at, updated_at, name, state_id) VALUES (%s, %s, %s, %s, %s)]
+[parameters: ('3c0efdc3-35a9-49ae-aa90-3148e7190b18', datetime.datetime(2023, 1, 6, 15, 43, 40, 885931), datetime.datetime(2023, 1, 6, 15, 43, 40, 885982), 'San Francisco', '95a5abab-aa65-4861-9bc6-1da4a36069aa')]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)

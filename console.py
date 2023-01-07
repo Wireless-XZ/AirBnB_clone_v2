@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ Console Module """
+import json
 import cmd
 import sys
 from models.base_model import BaseModel
@@ -122,14 +123,14 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         new_instance = HBNBCommand.classes[args[0]]()
-
         for i in range(1, len(args)):
             att_name = args[i][:args[i].index('=')]
             att_val = args[i][args[i].index('=') + 1:].replace('_', ' ')
-            if "." in att_val:
+
+            if att_val[0] == '"':
+                att_val = json.loads(att_val)
+            elif "." in att_val:
                 att_val = float(att_val)
-            elif att_val[0] == '"':
-                att_val = str(att_val)
             else:
                 try:
                     att_val = int(att_val)
@@ -137,6 +138,7 @@ class HBNBCommand(cmd.Cmd):
                     continue;
             new_instance.__dict__[att_name] = att_val
         new_instance.save()
+        print("########################### id: ", new_instance.__dict__)
         print(new_instance.id)
 
     def help_create(self):
@@ -220,7 +222,6 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
                 return
             for k, v in storage.all().items():
-                print(k, args)
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:

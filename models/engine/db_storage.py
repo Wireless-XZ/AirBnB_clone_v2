@@ -12,6 +12,10 @@ from models.review import Review
 from sqlalchemy.orm import sessionmaker, scoped_session
 
 
+classes = {"State": State, "City": City, "User": User,
+           "Place": Place, "Review": Review, "Amenity": Amenity}
+
+
 class DBStorage:
     """Class definition"""
     __engine = None
@@ -26,21 +30,22 @@ class DBStorage:
                                               getenv("HBNB_MYSQL_DB")),
                                       pool_pre_ping=True)
 
+        if getenv("HBNB_ENV") == "test":
+            Base.metadata.drop_all(self.__engine)
+
 
     def all(self, cls=None):
         """Queries on the current database"""
-        from console import HBNBCommand
-        print("############################", type(cls))
         objs_dict = {}
         if cls is not None:
-            if cls in HBNBCommand.classes:
-                for obj in self.__session.query(HBNBCommand.classes[cls]).all():
+            if cls in classes:
+                for obj in self.__session.query(classes[cls]).all():
                     key = str(obj.__class__.__name__) + "." + str(obj.id)
                     objs_dict[key] = obj
         else:
-            for key, val in HBNBCommand.classes.items():
+            for key, val in classes.items():
                 for obj in self.__session.query(val).all():
-                    key = str(val.__class__.__name__) + "." + str(obj.id)
+                    key = str(obj.__class__.__name__) + "." + str(obj.id)
                     objs_dict[key] = obj
         return (objs_dict)
 
