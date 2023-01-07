@@ -100,6 +100,7 @@ class HBNBCommand(cmd.Cmd):
     def help_quit(self):
         """ Prints the help documentation for quit  """
         print("Exits the program with formatting\n")
+
     def do_EOF(self, arg):
         """ Handles EOF to exit program """
         print()
@@ -135,7 +136,7 @@ class HBNBCommand(cmd.Cmd):
                 try:
                     att_val = int(att_val)
                 except Exception:
-                    continue;
+                    continue
             new_instance.__dict__[att_name] = att_val
         new_instance.save()
         print(new_instance.id)
@@ -201,7 +202,7 @@ class HBNBCommand(cmd.Cmd):
         key = c_name + "." + c_id
 
         try:
-            del(storage.all()[key])
+            del (storage.all()[key])
             storage.save()
         except KeyError:
             print("** no instance found **")
@@ -227,7 +228,7 @@ class HBNBCommand(cmd.Cmd):
             for k, v in storage.all().items():
                 print_list.append(v)
 
-        #for obj in print_list:
+        """ for obj in print_list"""
         print(print_list)
 
     def help_all(self):
@@ -335,5 +336,7 @@ class HBNBCommand(cmd.Cmd):
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
 
+
 if __name__ == "__main__":
+
     HBNBCommand().cmdloop()

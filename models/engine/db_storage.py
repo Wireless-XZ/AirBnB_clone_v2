@@ -33,7 +33,6 @@ class DBStorage:
         if getenv("HBNB_ENV") == "test":
             Base.metadata.drop_all(self.__engine)
 
-
     def all(self, cls=None):
         """Queries on the current database"""
         objs_dict = {}
@@ -68,6 +67,6 @@ class DBStorage:
            Create the current database session"""
         Base.metadata.create_all(self.__engine)
         session_maker = sessionmaker(bind=self.__engine,
-                               expire_on_commit=False)
+                                     expire_on_commit=False)
         Session = scoped_session(session_maker)
         self.__session = Session()

@@ -18,9 +18,11 @@ class State(BaseModel, Base):
     __tablename__ = 'states'
     if storage_type == 'db':
         name = Column(String(128), nullable=False)
-        cities = relationship("City", backref="state", cascade="all, delete-orphan")
+        cities = relationship("City", backref="state", cascade="all,
+                              delete-orphan")
     else:
         name = ""
+
         @property
         def cities(self):
             """
