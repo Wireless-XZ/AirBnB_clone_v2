@@ -4,8 +4,6 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import String, Integer, Float, ForeignKey, Column, Table
 from sqlalchemy.orm import relationship
 from os import getenv
-#from models.city import City
-#from models.user import User
 
 
 storage_type = getenv("HBNB_TYPE_STORAGE")
@@ -37,7 +35,7 @@ class Place(BaseModel, Base):
         amenity_ids = []
         reviews = relationship("Review", backref="place",
                                cascade="all, delete-orphan")
-        amenities = relationship("Amenity",secondary=place_amenity,
+        amenities = relationship("Amenity", secondary=place_amenity,
                                  back_populates="place_amenities",
                                  viewonly=False)
     else:
