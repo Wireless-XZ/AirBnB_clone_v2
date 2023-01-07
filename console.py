@@ -127,7 +127,7 @@ class HBNBCommand(cmd.Cmd):
             att_name = args[i][:args[i].index('=')]
             att_val = args[i][args[i].index('=') + 1:].replace('_', ' ')
             try:
-                att_val = HBNBCommand.verify_attribute(att_val)
+                att_val = HBNBCommand.check_val(att_val)
             except:
                 continue;
             if not att_val:
@@ -135,6 +135,22 @@ class HBNBCommand(cmd.Cmd):
             setattr(new_instance, att_name, att_val)
         new_instance.save()
         print(new_instance.id)
+
+    @classmethod
+    def check_val(cls, attri_val):
+        """
+        Verify if the attribute value is correctly formatted
+        """
+        if attri_val[0] is attri_val[-1] in ['"', "'"]:
+            return attri_val.strip('"\'').replace('_', ' ').replace('\\', '"')
+        else:
+            try:
+                try:
+                    return int(attri_val)
+                except ValueError:
+                    return float(attri_val)
+            except ValueError:
+                return None
     """
     def do_create(self, args):
         # Create an object of any class
