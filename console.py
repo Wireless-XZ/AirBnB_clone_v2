@@ -138,7 +138,6 @@ class HBNBCommand(cmd.Cmd):
                     continue;
             new_instance.__dict__[att_name] = att_val
         new_instance.save()
-        print("########################### id: ", new_instance.__dict__)
         print(new_instance.id)
 
     def help_create(self):
@@ -228,8 +227,8 @@ class HBNBCommand(cmd.Cmd):
             for k, v in storage.all().items():
                 print_list.append(v)
 
-        for obj in print_list:
-            print(obj)
+        #for obj in print_list:
+        print(print_list)
 
     def help_all(self):
         """ Help information for the all command """
