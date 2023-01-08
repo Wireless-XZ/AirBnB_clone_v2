@@ -26,7 +26,7 @@ class BaseModel:
                                                      '%Y-%m-%dT%H:%M:%S.%f')
             kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
                                                      '%Y-%m-%dT%H:%M:%S.%f')
-            del kwargs['__class__']
+            #del kwargs['__class__']
             self.__dict__.update(kwargs)
 
     def __str__(self):
@@ -43,10 +43,12 @@ class BaseModel:
 
     def to_dict(self):
         """Convert instance into dict format"""
-        dictionary = dict(self.__dict__)
+        dictionary = self.__class__.__name__
         dictionary["__class__"] = str(type(self).__name__)
-        dictionary['created_at'] = self.created_at.isoformat()
-        dictionary['updated_at'] = self.updated_at.isoformat()
+        #dictionary['created_at'] = self.created_at.isoformat()
+        #dictionary['updated_at'] = self.updated_at.isoformat()
+        dictionary['updated_at'] = self.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
+        dictionary['created_at'] = self.created_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
         if "_sa_instance_state" in dictionary:
             del dictionary["_sa_instance_state"]
         return dictionary
