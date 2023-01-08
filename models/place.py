@@ -15,8 +15,7 @@ if storage_type == 'db':
                                  nullable=False),
                           Column('amenity_id', String(60),
                                  ForeignKey("amenities.id"),
-                                 nullable=False)
-    )
+                                 nullable=False))
 
 
 class Place(BaseModel, Base):
