@@ -40,7 +40,7 @@ def do_deploy(archive_path):
         run('tar -xzf /tmp/{} -C {}/'.format(arc[1], main))
         run('rm /tmp/{}'.format(arc[1]))
         run('mv {}/web_static/* {}/'.format(main, main))
-        run'rm -rf {}/web_static'.format(main))
+        run('rm -rf {}/web_static'.format(main))
         run('rm -rf /data/web_static/current')
         run('ln -s {}/ "/data/web_static/current"'.format(main))
         return True
