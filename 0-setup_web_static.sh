@@ -11,7 +11,7 @@ sudo mkdir -p /data/web_static/releases/test/
 
 sudo chown -R ubuntu:ubuntu /data/
 
-sudo echo "WIRELEXZ..." > /data/web_static/releases/test/index.html
+sudo echo "WIRELEXZ..." | sudo tee /data/web_static/releases/test/index.html
 
 ln -s /data/web_static/releases/test/ /data/web_static/current
 
