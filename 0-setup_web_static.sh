@@ -8,7 +8,7 @@ sudo apt -y install nginx
 sudo mkdir -p /data/web_static/releases/test/
 sudo mkdir /data/web_static/shared/
 
-sudo echo "WIRELEXZ..." > /data/web_static/releases/test/index.html
+sudo echo "WIRELEXZ..." | sudo tee /data/web_static/releases/test/index.html
 
 rm -f "/data/web_static/current";
 ln -s /data/web_static/releases/test/ /data/web_static/curren
