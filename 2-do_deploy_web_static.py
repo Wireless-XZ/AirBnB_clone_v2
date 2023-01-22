@@ -8,6 +8,7 @@ import os
 env.hosts = ["3.94.181.17", "54.157.165.12"]
 env.user = "ubuntu"
 
+
 def do_deploy(archive_path):
     """distributes an archive to your web servers
     """
@@ -24,6 +25,5 @@ def do_deploy(archive_path):
         sudo('ln -s {}/ "/data/web_static/current"'.format(main))
 
         return True
-    except:
+    except Exception:
         return False
-
