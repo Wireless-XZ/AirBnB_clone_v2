@@ -12,7 +12,9 @@ def do_pack():
     """The function that generates the .tgz file"""
     local("mkdir -p versions")
     date = str(datetime.now()).replace("-", "")\
-                              .replace(":", "").replace(" ", "")
+                              .replace(":", "")\
+                              .replace(" ", "")\
+                              .replace(".", "")
     output_name = "web_static_" + date + ".tgz"
 
     tar = local('tar -cvzf versions/{} web_static'.format(output_name))
