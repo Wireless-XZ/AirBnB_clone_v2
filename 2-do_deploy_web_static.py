@@ -29,25 +29,19 @@ def do_pack():
 
 
 def do_deploy(archive_path):
-    if not os.path.exists(archive_path):
+    """distributes an archive to your web servers
+    """
+    if os.path.exists(archive_path) is False:
         return False
 
-    filename = os.path.basename(archive_path)
-    filename_without_extension = os.path.splitext(filename)[0]
-
-    # upload archive to /tmp/ directory on web server
+    arc = archive_path.split("/")
+    base = arc[1].strip('.tgz')
     put(archive_path, '/tmp/')
-
-    # uncompress archive to /data/web_static/releases/<filename without extension>
-    run('mkdir -p /data/web_static/releases/{}/'.format(filename_without_extension))
-    run('tar -xzf /tmp/{} -C /data/web_static/releases/{}/'.format(filename, filename_without_extension))
-
-    # delete archive from web server
-    run('rm /tmp/{}'.format(filename))
-
-    # delete symbolic link /data/web_static/current
-    run('rm -rf /data/web_static/current')
-
-    # create new symbolic link /data/web_static/current
-    run('ln -s /data/web_static/releases/{}/ /data/web_static/current'.format(filename_without_extension))
+    sudo('mkdir -p /data/web_static/releases/{}'.format(base))
+    main = "/data/web_static/releases/{}".format(base)
+    sudo('tar -xzf /tmp/{} -C {}/'.format(arc[1], main))
+    sudo('rm /tmp/{}'.format(arc[1]))
+    sudo('mv {}/web_static/* {}/'.format(main, main))
+    sudo('rm -rf /data/web_static/current')
+    sudo('ln -s {}/ "/data/web_static/current"'.format(main))
     return True
