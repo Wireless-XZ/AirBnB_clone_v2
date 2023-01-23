@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
+#
 # Configures a server for deoloyment
-
+#
 # Check if Nginx is already installed
 if ! command -v nginx &>/dev/null; then
     # Install Nginx
