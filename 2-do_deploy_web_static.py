@@ -7,8 +7,6 @@ from datetime import datetime
 
 
 env.hosts = ["54.87.250.97", "54.85.91.142"]
-env.user = 'ubuntu'
-env.key_filename = '~/key'
 
 
 def do_pack():
@@ -35,13 +33,29 @@ def do_deploy(archive_path):
         return False
 
     arc = archive_path.split("/")
-    base = arc[1].strip('.tgz')
+    arc_file_without_ext = arc[1].strip('.tgz')
+
+    # upload the archive to /tmp/
     put(archive_path, '/tmp/')
-    sudo('mkdir -p /data/web_static/releases/{}'.format(base))
-    main = "/data/web_static/releases/{}".format(base)
+
+    # uncompress the archive
+    sudo('mkdir -p /data/web_static/releases/{}'.format(arc_file_without_ext))
+    main = "/data/web_static/releases/{}".format(arc_file_without_ext)
     sudo('tar -xzf /tmp/{} -C {}/'.format(arc[1], main))
+
+    # delete the archive file
     sudo('rm /tmp/{}'.format(arc[1]))
+
+    # move uncompressed file's content
     sudo('mv {}/web_static/* {}/'.format(main, main))
+
+    # remove uncompressed folder
+    sudo('rm -rf {}/web_static/'.format(main))
+
+    # remove old symlink
     sudo('rm -rf /data/web_static/current')
+
+    # create new symlink
     sudo('ln -s {}/ "/data/web_static/current"'.format(main))
+
     return True
