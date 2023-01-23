@@ -6,7 +6,7 @@ import tarfile
 from datetime import datetime
 
 
-env.hosts = ["3.94.181.17", "54.157.165.12"]
+env.hosts = ["54.87.250.97", "54.85.91.142"]
 env.user = 'ubuntu'
 env.key_filename = '~/key'
 

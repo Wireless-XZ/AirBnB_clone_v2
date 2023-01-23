@@ -1,26 +1,64 @@
 #!/usr/bin/env bash
-#
-# Update Package
-#
-sudo apt update
-sudo apt -y upgrade
-sudo apt -y install nginx
+# A Bash script that sets up your web servers for the deployment
 
-sudo mkdir -p /data/web_static/releases/test/
-sudo mkdir -p /data/web_static/shared/
+# Check if Nginx is already installed
+if ! command -v nginx &>/dev/null; then
+    # Install Nginx
+    sudo apt-get update
+    sudo apt-get install nginx -y
+fi
 
-sudo echo "WIRELEXZ..." | sudo tee /data/web_static/releases/test/index.html
+# Create necessary directories if they don't already exist
+if [ ! -d "/data" ]; then
+    sudo mkdir /data
+fi
 
-rm -f "/data/web_static/current"
-ln -s /data/web_static/releases/test/ /data/web_static/current
+if [ ! -d "/data/web_static" ]; then
+    sudo mkdir /data/web_static
+fi
 
-sudo chown -hR ubuntu:ubuntu "/data/"
+if [ ! -d "/data/web_static/releases" ]; then
+    sudo mkdir /data/web_static/releases
+fi
 
-CONFIG="server_name _;\n\n\tlocation /hbnb_static {\n\t\talias /data/web_static/current/\
-;\n\t}\n"
+if [ ! -d "/data/web_static/shared" ]; then
+    sudo mkdir /data/web_static/shared
+fi
 
-FILE="/etc/nginx/sites-available/default"
+if [ ! -d "/data/web_static/releases/test" ]; then
+    sudo mkdir /data/web_static/releases/test
+fi
 
-sudo sed -i "s|server_name _;|$CONFIG|" $FILE
+# Create a fake index.html file
+echo "test content" | sudo tee /data/web_static/releases/test/index.html > /dev/null
 
+# Create or update symbolic link
+if [ -L "/data/web_static/current" ]; then
+    sudo rm /data/web_static/current
+fi
+sudo ln -s /data/web_static/releases/test/ /data/web_static/current
+
+# Give ownership of the /data/ folder to the ubuntu user and group
+sudo chown -R ubuntu:ubuntu /data
+
+# Update Nginx configuration
+sudo tee /etc/nginx/sites-available/default > /dev/null <<EOF
+EOF
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        server_name _;
+        root /data/web_static/current;
+        index index.html;
+
+        location /hbnb_static/ {
+                alias /data/web_static/current/;
+        }
+}
+EOF
+
+# Restart Nginx
 sudo service nginx restart
+
+EOF
