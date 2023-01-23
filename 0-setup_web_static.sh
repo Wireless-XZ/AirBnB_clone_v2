@@ -1,14 +1,37 @@
-#!/usr/bin/env bash
-# set up dummy html
 
-server="\n\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}"
+#!/usr/bin/env bash
+# A bash script that sets up your
+# web servers for deployment
+
+# set Nginx location block
+server="\n\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\
+\t}"
+
+# set nginx config file
 file="/etc/nginx/sites-available/default"
+
+# Update system
 sudo apt-get update -y
+
+# Install Nginx
 sudo apt-get install nginx -y
+
+# Create relevant directories
 sudo mkdir -p "/data/web_static/releases/test/"
 sudo mkdir "/data/web_static/shared/"
-echo "Holberton" > "/data/web_static/releases/test/index.html"
-rm -f "/data/web_static/current"; ln -s "/data/web_static/releases/test/" "/data/web_static/current"
-sudo chown -hR ubuntu:ubuntu "/data/"
+
+# Give user ownership of /data/ dir
+sudo chown -R ubuntu:ubuntu "/data/"
+
+# create dummy html page
+sudo echo "Wireless" > "/data/web_static/releases/test/index.html"
+
+# remove and create new symlink
+sudo rm -f "/data/web_static/current"
+sudo ln -s "/data/web_static/releases/test/" "/data/web_static/current"
+
+# add location block to nginx config file
 sudo sed -i "29i\ $server" "$file"
+
+# restart nginx service
 sudo service nginx restart
