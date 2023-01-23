@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# A Bash script that sets up your web servers for the deployment
+# Configures a server for deoloyment
 
 # Check if Nginx is already installed
 if ! command -v nginx &>/dev/null; then
@@ -44,7 +44,7 @@ sudo chown -R ubuntu:ubuntu /data
 # Update Nginx configuration
 sudo tee /etc/nginx/sites-available/default > /dev/null <<EOF
 EOF
-server {
+"server {
         listen 80 default_server;
         listen [::]:80 default_server;
 
@@ -55,7 +55,7 @@ server {
         location /hbnb_static/ {
                 alias /data/web_static/current/;
         }
-}
+}"
 EOF
 
 # Restart Nginx
