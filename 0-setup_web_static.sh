@@ -20,15 +20,15 @@ sudo apt-get install nginx -y
 sudo mkdir -p "/data/web_static/releases/test/"
 sudo mkdir "/data/web_static/shared/"
 
-# Give user ownership of /data/ dir
-sudo chown -R ubuntu:ubuntu "/data/"
-
 # create dummy html page
-sudo echo "Wireless" > "/data/web_static/releases/test/index.html"
+echo "Wireless" | sudo tee "/data/web_static/releases/test/index.html"
 
 # remove and create new symlink
 sudo rm -f "/data/web_static/current"
 sudo ln -s "/data/web_static/releases/test/" "/data/web_static/current"
+
+# Give user ownership of /data/ dir
+sudo chown -R ubuntu:ubuntu "/data/"
 
 # add location block to nginx config file
 sudo sed -i "29i\ $server" "$file"
