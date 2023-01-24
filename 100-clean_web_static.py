@@ -76,12 +76,22 @@ def do_clean(number=0):
     path = "/data/web_static/releases"
     archive_files = sorted(os.listdir("versions"),
                            key=lambda x: x.split('_')[-1])
+    if number < 0:
+        return
 
     if number == 0 or number == 1:
         for i in archive_files[0:len(archive_files) - 1]:
             local('rm -rf {}'.format(i))
-            sudo('rm -rf {}/{}'.format(path, i.strip('.tgz')))
     else:
         for i in archive_files[0:len(archive_files) - number]:
             local('rm {}'.format(i))
-            sudo('rm -rf {}/{}'.format(path, i.strip('.tgz')))
+
+    files = sudo("ls /data/web_static/releases")
+    archive_files = sorted(files.split("\n"),
+                           key=lambda x: x.split('_')[-1])
+    if number == 0 or number == 1:
+        for i in archive_files[0:len(archive_files) - 1]:
+            sudo('rm -rf {}/{}'.format(path, i))
+    else:
+        for i in archive_files[0:len(archive_files) - number]:
+            sudo('rm -rf {}/{}'.format(path, i))
