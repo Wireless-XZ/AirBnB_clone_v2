@@ -75,7 +75,7 @@ def do_clean(number=0):
 
     path = "/data/web_static/releases"
     archive_files = sorted(os.listdir("versions"),
-                           key=lambda x: x.split('_')[-1])
+                           key=lambda x: x.split('_')[-1].strip('tgz'))
     if number < 0:
         return
 
