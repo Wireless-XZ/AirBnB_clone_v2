@@ -2,7 +2,7 @@
 """web server distribution"""
 from fabric.api import *
 import os.path
-import tarfile
+from fabric.state import commands, connections
 from datetime import datetime
 
 
@@ -71,29 +71,25 @@ def deploy():
 
 
 def do_clean(number=0):
-    """ deletes out-of-date archives """
-
-    path = "/data/web_static/releases"
-
-    files = local("ls versions")
-    archive_files = sorted(files.split("\n"),
-                           key=lambda x: x.split('_')[-1].strip('.tgz'))
-    if number < 0:
-        return
-
-    if number == 0 or number == 1:
-        for i in archive_files[0:len(archive_files) - 1]:
-            local('rm -rf {}'.format(i))
+    """deletes out-of-date archives"""
+    local('ls -t ~/AirBnB_Clone_V2/versions/').split()
+    with cd("/data/web_static/releases"):
+        target_R = sudo("ls -t .").split()
+    paths = "/data/web_static/releases"
+    number = int(number)
+    if number == 0:
+        num = 1
     else:
-        for i in archive_files[0:len(archive_files) - number]:
-            local('rm {}'.format(i))
-
-    files = sudo("ls /data/web_static/releases")
-    archive_files = sorted(files.split("\n"),
-                           key=lambda x: x.split('_')[-1])
-    if number == 0 or number == 1:
-        for i in archive_files[0:len(archive_files) - 1]:
-            sudo('rm -rf {}/{}'.format(path, i))
+        num = number
+    if len(target_R) > 0:
+        if len(target) == number or len(target) == 0:
+            pass
+        else:
+            cl = target[num:]
+            for i in range(len(cl)):
+                local('rm -f ~/AirBnB_Clone_V2/versions/{}'.format(target[-1]))
+        rem = target_R[num:]
+        for j in range(len(rem)):
+            sudo('rm -rf {}/{}'.format(paths, rem[-1].strip(".tgz")))
     else:
-        for i in archive_files[0:len(archive_files) - number]:
-            sudo('rm -rf {}/{}'.format(path, i))
+        pass
