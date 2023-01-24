@@ -77,7 +77,7 @@ def do_clean(number=0):
 
     files = local("ls versions")
     archive_files = sorted(files.split("\n"),
-                           key=lambda x: x.split('_')[-1].strip('tgz'))
+                           key=lambda x: x.split('_')[-1].strip('.tgz'))
     if number < 0:
         return
 
