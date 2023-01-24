@@ -74,7 +74,9 @@ def do_clean(number=0):
     """ deletes out-of-date archives """
 
     path = "/data/web_static/releases"
-    archive_files = sorted(os.listdir("versions"),
+
+    files = local("ls versions")
+    archive_files = sorted(files.split("\n"),
                            key=lambda x: x.split('_')[-1].strip('tgz'))
     if number < 0:
         return
