@@ -1,0 +1,24 @@
+from fabric.api import local
+
+def do_clean(number=0):
+    """ deletes out-of-date archives """
+
+    path = "/data/web_static/releases"
+
+    files = local("ls versions")
+    archive_files = sorted(files.split("\n"),
+                           key=lambda x: x.split('_')[-1].strip('.tgz'))
+
+    if number == 0 or number == 1:
+        for i in archive_files[0:len(archive_files) - 1]:
+            #local('rm -rf {}'.format(i))
+            #sudo('rm -rf {}/{}'.format(path, i.strip('.tgz')))
+            print("###", i)
+    else:
+        for i in archive_files[0:len(archive_files) - number]:
+            #local('rm {}'.format(i))
+            #sudo('rm -rf {}/{}'.format(path, i.strip('.tgz')))
+            print("###", i)
+
+
+do_clean()
