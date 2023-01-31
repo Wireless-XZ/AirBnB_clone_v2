@@ -2,7 +2,7 @@
 """web server distribution"""
 from fabric.api import *
 import os.path
-import tarfile
+from fabric.state import commands, connections
 from datetime import datetime
 
 
@@ -59,3 +59,37 @@ def do_deploy(archive_path):
     sudo('ln -s {}/ "/data/web_static/current"'.format(main))
 
     return True
+
+
+def deploy():
+    """  creates and distributes an archive to your web servers """
+    archive_path = do_pack()
+    if archive_path is None:
+        return False
+
+    return do_deploy(archive_path)
+
+
+def do_clean(number=0):
+    """deletes out-of-date archives"""
+    local('ls -t ~/AirBnB_Clone_V2/versions/').split()
+    with cd("/data/web_static/releases"):
+        target_R = sudo("ls -t .").split()
+    paths = "/data/web_static/releases"
+    number = int(number)
+    if number == 0:
+        num = 1
+    else:
+        num = number
+    if len(target_R) > 0:
+        if len(target) == number or len(target) == 0:
+            pass
+        else:
+            cl = target[num:]
+            for i in range(len(cl)):
+                local('rm -f ~/AirBnB_Clone_V2/versions/{}'.format(target[-1]))
+        rem = target_R[num:]
+        for j in range(len(rem)):
+            sudo('rm -rf {}/{}'.format(paths, rem[-1].strip(".tgz")))
+    else:
+        pass

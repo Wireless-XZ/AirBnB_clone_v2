@@ -36,7 +36,7 @@ def do_deploy(archive_path):
     arc_file_without_ext = arc[1].strip('.tgz')
 
     # upload the archive to /tmp/
-    put(archive_path, '/tmp/')
+    put(archive_path, '/tmp/{}'.format(arc[1]), use_sudo=True)
 
     # uncompress the archive
     sudo('mkdir -p /data/web_static/releases/{}'.format(arc_file_without_ext))
@@ -60,6 +60,7 @@ def do_deploy(archive_path):
 
     return True
 
+
 def deploy():
     """  creates and distributes an archive to your web servers """
     path = do_pack()
@@ -67,4 +68,3 @@ def deploy():
         return False
 
     return do_deploy(archive_path)
-    
