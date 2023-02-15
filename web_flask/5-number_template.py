@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """The 5-number_template  module"""
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
