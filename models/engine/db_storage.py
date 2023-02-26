@@ -1,4 +1,4 @@
-#!/usr/bin/pthon3
+#!/usr/bin/python3
 """ db_storage Module"""
 from sqlalchemy import create_engine
 from os import getenv
