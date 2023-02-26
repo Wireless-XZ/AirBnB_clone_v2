@@ -50,9 +50,9 @@ def number_odd_or_even(n):
     else:
         result = "odd"
 
-    return render_template('6-number_odd_or_even.html', number=n, result=result)
+    return render_template('6-number_odd_or_even.html',
+                           number=n, result=result)
 
-    
-    
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
