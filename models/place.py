@@ -4,6 +4,7 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import String, Integer, Float, ForeignKey, Column, Table
 from sqlalchemy.orm import relationship
 from os import getenv
+from sqlalchemy.orm import backref
 
 
 storage_type = getenv("HBNB_TYPE_STORAGE")
