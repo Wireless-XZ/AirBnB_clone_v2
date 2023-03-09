@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" cities_by_states module """
 from flask import Flask, render_template
 from models import storage, State, City
 
