@@ -4,33 +4,27 @@
 """
 from flask import Flask, render_template
 from models import storage
-from models.state import State
-from models.city import City
-
-
 app = Flask(__name__)
 
 
 @app.teardown_appcontext
-def tear_down(self):
+def handle_teardown(self):
     """
-        tear down app context
+        method to handle teardown
     """
     storage.close()
 
 
 @app.route('/cities_by_states', strict_slashes=False)
-def list_states():
-    """lists states from database
-    Returns:
-        HTML
+def cities_by_states():
     """
-    dict_states = storage.all(State)
-    all_states = []
-    for k, v in dict_states.items():
-        all_states.append(v)
-    return render_template('8-cities_by_states.html', all_states=all_states)
+        Display a HTML page with a list of all states and their cities
+    """
+    states = storage.all('State').values()
+    states = sorted(states, key=lambda s: s.name)
+
+    return render_template("8-cities_by_states.html", states=states)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
