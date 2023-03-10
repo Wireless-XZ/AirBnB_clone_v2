@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+    Sript that starts a Flask web application
+"""
 from flask import Flask, render_template
 from models import storage
 from models.state import State
@@ -10,7 +13,9 @@ app = Flask(__name__)
 
 @app.teardown_appcontext
 def tear_down(self):
-    """tear down app context"""
+    """
+        tear down app context
+    """
     storage.close()
 
 
