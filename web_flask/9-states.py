@@ -11,15 +11,16 @@ app = Flask(__name__)
 @app.route('/states', strict_slashes=False)
 def states():
     """Display HTML page for all states sorted by name."""
-    states = sorted(storage.all(State).values(), key=lambda s: s.name)
-    return render_template('9-states.html', states=states)
+    states = sorted(storage.all('State').values(), key=lambda s: s.name)
+    return render_template('7-states_list.html', states=states)
 
 
-@app.route('/states/<int:id>', strict_slashes=False)
+@app.route('/states/<id>', strict_slashes=False)
 def states_id(id):
     """Display HTML page for state and its cities."""
+    
     state = None
-    for s in storage.all(State).values():
+    for s in storage.all('State').values():
         if s.id == id:
             state = s
             break
