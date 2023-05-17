@@ -6,7 +6,7 @@ import tarfile
 from datetime import datetime
 
 
-env.hosts = ["54.87.250.97", "54.85.91.142"]
+env.hosts = ["54.160.116.99", "18.235.248.184"]
 
 
 def do_pack():
@@ -63,7 +63,7 @@ def do_deploy(archive_path):
 
 def deploy():
     """  creates and distributes an archive to your web servers """
-    path = do_pack()
+    archive_path = do_pack()
     if archive_path is None:
         return False
 
