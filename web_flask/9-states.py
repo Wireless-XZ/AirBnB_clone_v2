@@ -18,7 +18,7 @@ def states():
 @app.route('/states/<id>', strict_slashes=False)
 def states_id(id):
     """Display HTML page for state and its cities."""
-    
+
     state = None
     for s in storage.all('State').values():
         if s.id == id:
